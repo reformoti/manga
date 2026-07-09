@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Приключение непростого парня - Манга</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0a0a0f;
+            color: #e0e0e0;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes gradientGlow {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .animate-on-load {
+            animation: fadeInUp 0.8s ease forwards;
+            opacity: 0;
+        }
+
+        .delay-1 {
+            animation-delay: 0.1s;
+        }
+        .delay-2 {
+            animation-delay: 0.3s;
+        }
+        .delay-3 {
+            animation-delay: 0.5s;
+        }
+        .delay-4 {
+            animation-delay: 0.7s;
+        }
+
+        header {
+            background: linear-gradient(135deg, #14141e 0%, #1a1a2e 100%);
+            padding: 20px 0;
+            border-bottom: 2px solid #2a2a4a;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(5px);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-placeholder {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #0a0a0f;
+            box-shadow: 0 0 20px rgba(255, 107, 107, 0.3);
+            background-image: url('img/header.png');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .site-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ff6b6b, #ffd93d, #6bcbff);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientGlow 4s ease infinite;
+            letter-spacing: 1px;
+        }
+
+        .site-title small {
+            font-size: 0.9rem;
+            font-weight: 300;
+            -webkit-text-fill-color: #aaa;
+            background: none;
+            display: block;
+            text-align: right;
+            letter-spacing: 2px;
+        }
+
+        .creator-badge {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #ffd93d;
+            padding: 8px 18px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            color: #ffd93d;
+            box-shadow: 0 0 15px rgba(255, 217, 61, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .creator-badge:hover {
+            background: rgba(255, 217, 61, 0.15);
+            box-shadow: 0 0 25px rgba(255, 217, 61, 0.25);
+            transform: scale(1.03);
+        }
+
+        .creator-badge span {
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .main-banner {
+            margin: 40px 0 50px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
+            border: 1px solid #2a2a4a;
+            position: relative;
+        }
+
+        .banner-placeholder {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: #888;
+            background-image: url('img/preview.png');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .banner-placeholder .banner-text {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px 40px;
+            border-radius: 12px;
+            backdrop-filter: blur(4px);
+            border-left: 4px solid #ffd93d;
+        }
+
+        .banner-placeholder .banner-text h2 {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #fff, #ffd93d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .chapters-section {
+            margin: 40px 0;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #2a2a4a;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section-title .accent-line {
+            flex: 1;
+            height: 2px;
+            background: linear-gradient(90deg, #ff6b6b, transparent);
+        }
+
+        .chapters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .chapter-card {
+            background: linear-gradient(145deg, #14141e, #1a1a2e);
+            border-radius: 16px;
+            padding: 25px 20px;
+            border: 1px solid #2a2a4a;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chapter-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: #ffd93d;
+            box-shadow: 0 12px 30px rgba(255, 217, 61, 0.15);
+        }
+
+        .chapter-card .chapter-number {
+            font-size: 0.85rem;
+            color: #ffd93d;
+            letter-spacing: 2px;
+            font-weight: 600;
+        }
+
+        .chapter-card h3 {
+            font-size: 1.5rem;
+            margin: 8px 0 12px;
+            color: #fff;
+        }
+
+        .chapter-card .chapter-preview {
+            width: 100%;
+            height: 120px;
+            background: #0a0a0f;
+            border-radius: 10px;
+            margin: 12px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #555;
+            font-size: 0.9rem;
+            border: 1px dashed #2a2a4a;
+            background-image: url('img/chapter_0_preview.png');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .chapter-card .chapter-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: #888;
+            margin-top: 10px;
+        }
+
+        .chapter-card .read-btn {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 8px 25px;
+            background: linear-gradient(135deg, #ff6b6b, #ffd93d);
+            border-radius: 30px;
+            color: #0a0a0f;
+            font-weight: bold;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .chapter-card .read-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255, 107, 107, 0.4);
+        }
+
+        .reader-page {
+            display: none;
+            margin: 30px 0 60px;
+        }
+
+        .reader-page.active {
+            display: block;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        .reader-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #2a2a4a;
+        }
+
+        .reader-header h2 {
+            font-size: 2rem;
+        }
+
+        .reader-header .back-btn {
+            padding: 10px 25px;
+            background: #2a2a4a;
+            border-radius: 30px;
+            color: #fff;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .reader-header .back-btn:hover {
+            background: #3a3a5a;
+            transform: scale(1.03);
+        }
+
+        .frame-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .frame-item {
+            max-width: 100%;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+            border: 1px solid #2a2a4a;
+            transition: all 0.3s ease;
+        }
+
+        .frame-item:hover {
+            transform: scale(1.01);
+            border-color: #ffd93d;
+        }
+
+        .frame-item img {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-height: 80vh;
+            object-fit: contain;
+            background: #0a0a0f;
+        }
+
+        .frame-placeholder {
+            width: 100%;
+            min-height: 300px;
+            background: #14141e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #555;
+            font-size: 1.2rem;
+            padding: 40px;
+            text-align: center;
+            border: 2px dashed #2a2a4a;
+        }
+
+        .frame-placeholder span {
+            background: #1a1a2e;
+            padding: 10px 25px;
+            border-radius: 30px;
+            border: 1px solid #ffd93d;
+        }
+
+        footer {
+            margin-top: 60px;
+            padding: 30px 0;
+            border-top: 1px solid #1a1a2e;
+            text-align: center;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        footer .footer-creator {
+            color: #ffd93d;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+            .site-title {
+                font-size: 1.4rem;
+            }
+            .site-title small {
+                text-align: center;
+            }
+            .banner-placeholder {
+                height: 250px;
+            }
+            .banner-placeholder .banner-text h2 {
+                font-size: 1.6rem;
+            }
+            .section-title {
+                font-size: 1.5rem;
+            }
+            .chapters-grid {
+                grid-template-columns: 1fr;
+            }
+            .reader-header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .banner-placeholder {
+                height: 180px;
+            }
+            .banner-placeholder .banner-text h2 {
+                font-size: 1.2rem;
+            }
+            .chapter-card h3 {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container header-content">
+            <div class="logo-area">
+                <div class="logo-placeholder"></div>
+                <div class="site-title">
+                    ПРИКЛЮЧЕНИЕ НЕПРОСТОГО ПАРНЯ
+                    <small>Reformoti</small>
+                </div>
+            </div>
+            <div class="creator-badge">
+                ✦ Создатель: <span>reformoti</span> ✦
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <section class="main-banner animate-on-load delay-1">
+            <div class="banner-placeholder">
+                <div class="banner-text">
+                    <h2>Приключение непростого парня</h2>
+                    <p style="-webkit-text-fill-color: #ccc; color: #ccc; margin-top: 8px;">Глава 0 · Начало пути</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="chapters-section" id="chaptersList">
+            <div class="section-title animate-on-load delay-2">
+                <span>📖 Главы</span>
+                <span class="accent-line"></span>
+            </div>
+
+            <div class="chapters-grid">
+                <div class="chapter-card animate-on-load delay-3" data-chapter="0">
+                    <div class="chapter-number">ГЛАВА 0</div>
+                    <h3>Пролог: Непростой выбор</h3>
+                    <div class="chapter-preview"></div>
+                    <div class="chapter-meta">
+                        <span>📅 10 июля 2026</span>
+                        <span>3 фрейма</span>
+                    </div>
+                    <button class="read-btn" onclick="openChapter(0)">Читать</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="reader-page" id="readerPage">
+            <div class="reader-header">
+                <h2 id="readerTitle">Глава 0: Пролог</h2>
+                <button class="back-btn" onclick="closeReader()">← Назад к главам</button>
+            </div>
+            <div class="frame-container" id="frameContainer"></div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>© 2026 · Манга «Приключение непростого парня»</p>
+            <p style="margin-top: 5px;">Создатель: <span class="footer-creator">reformoti</span></p>
+            <p style="margin-top: 10px; font-size: 0.8rem; color: #444;">Сайт создан с ❤️ для поклонников манги</p>
+        </div>
+    </footer>
+
+    <script>
+        const mangaData = {
+            chapters: {
+                0: {
+                    title: 'Глава 0: Пролог — Непростой выбор',
+                    frames: [
+                        'img/frame_0_1.png',
+                        'img/frame_0_2.png',
+                        'img/frame_0_3.png'
+                    ]
+                }
+            }
+        };
+
+        function openChapter(chapterId) {
+            const chapter = mangaData.chapters[chapterId];
+            if (!chapter) {
+                alert('Глава не найдена!');
+                return;
+            }
+
+            document.getElementById('chaptersList').style.display = 'none';
+            document.getElementById('readerPage').classList.add('active');
+            document.getElementById('readerTitle').textContent = chapter.title;
+
+            const container = document.getElementById('frameContainer');
+            container.innerHTML = '';
+
+            if (chapter.frames && chapter.frames.length > 0) {
+                chapter.frames.forEach((frameUrl, index) => {
+                    const frameDiv = document.createElement('div');
+                    frameDiv.className = 'frame-item animate-on-load';
+                    frameDiv.style.animationDelay = `${index * 0.15}s`;
+
+                    const img = document.createElement('img');
+                    img.src = frameUrl;
+                    img.alt = `Фрейм ${index + 1}`;
+                    img.onerror = function() {
+                        this.style.display = 'none';
+                        const placeholder = document.createElement('div');
+                        placeholder.className = 'frame-placeholder';
+                        placeholder.innerHTML = `<span>⚠️ Фрейм ${index + 1} не загрузился</span>`;
+                        frameDiv.appendChild(placeholder);
+                    };
+
+                    frameDiv.appendChild(img);
+                    container.appendChild(frameDiv);
+                });
+            } else {
+                const emptyMsg = document.createElement('div');
+                emptyMsg.className = 'frame-placeholder';
+                emptyMsg.innerHTML = '<span>В этой главе пока нет фреймов.</span>';
+                container.appendChild(emptyMsg);
+            }
+
+            document.getElementById('readerPage').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function closeReader() {
+            document.getElementById('readerPage').classList.remove('active');
+            document.getElementById('chaptersList').style.display = 'block';
+            document.getElementById('chaptersList').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Сайт манги "Приключение непростого парня" загружен!');
+            console.log('Создатель: reformoti');
+        });
+    </script>
+
+</body>
+</html>
